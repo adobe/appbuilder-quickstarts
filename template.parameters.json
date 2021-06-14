@@ -1,0 +1,6 @@
+{
+  "{{REPO}}": [ "src/helpers.js", "src/index.js", "docs/readme_template.md" ],
+  "{{LIB_NAME}}": [ "e2e/.env", "e2e/e2e.js", "e2e/README.md", "spec/api.json", "src/index.js", "src/SDKErrors.js", "docs/readme_template.md" ],
+  "LibNameCoreAPI": [ "src/index.js" ]
+}
+
