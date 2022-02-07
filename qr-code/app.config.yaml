@@ -1,0 +1,18 @@
+application:
+  actions: actions
+  web: web-src
+  runtimeManifest:
+    packages:
+      qr-code-demo:
+        license: Apache-2.0
+        actions:
+          get-qr-code:
+            function: actions/qr-code/index.js
+            web: 'yes'
+            runtime: 'nodejs:14'
+            inputs:
+              LOG_LEVEL: debug
+              url: https://developer.adobe.com/app-builder/
+            annotations:
+              require-adobe-auth: false
+              final: false
