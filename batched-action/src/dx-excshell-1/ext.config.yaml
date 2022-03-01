@@ -1,0 +1,28 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+actions: actions
+runtimeManifest:
+  packages:
+    dx-excshell-1:
+      actions:
+        batcher:
+          function: actions/batcher/index.js
+          web: 'yes'
+          runtime: 'nodejs:14'
+          inputs:
+            LOG_LEVEL: debug
+          annotations:
+            require-adobe-auth: false
+            final: false
+        worker:
+          function: actions/worker/index.js
+          web: 'yes'
+          runtime: 'nodejs:14'
+          inputs:
+            LOG_LEVEL: debug
+            batchData: string
+          annotations:
+            require-adobe-auth: false
+            final: false
