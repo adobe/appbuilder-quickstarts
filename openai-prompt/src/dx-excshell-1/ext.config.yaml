@@ -1,0 +1,21 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+actions: actions
+web: web-src
+runtimeManifest:
+  packages:
+    dx-excshell-1:
+      license: Apache-2.0
+      actions:
+        get-bandname:
+          function: actions/get-bandname/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            OPENAI_API_KEY: $OPENAI_API_KEY
+          annotations:
+            require-adobe-auth: false
+            final: true
