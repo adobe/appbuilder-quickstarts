@@ -35,7 +35,9 @@ async function main (params) {
 
     return {
       statusCode: 200,
-      result: completion.data.choices[0].text
+      body: { 
+          result: completion.data.choices[0].text
+      }
     }
 
   } catch (error) {
