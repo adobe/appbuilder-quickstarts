@@ -5,15 +5,4 @@ configSchema:
   - title: "Open AI api key"
     type: "string"
     secret: true
-    description: "please provide your open ai api key"
     envKey: "OPENAI_API_KEY"
-  - title: "the dropdown"
-    type: "string"
-    description: "please provide your favorite color"
-    enum:
-      - "yellow"
-      - "pink"
-      - "blue"
-      - "green"
-      - "red"
-    envKey: "MY_COLOR"
