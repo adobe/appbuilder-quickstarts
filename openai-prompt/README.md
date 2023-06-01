@@ -1,6 +1,8 @@
-# jessedemo1
+# openai-prompt
 
-Welcome to my Adobe I/O Application!
+[![Deploy to App Builder](https://53444-appbuilderbadge-stage.adobeio-static.net/api/v1/web/deploy/button)](https://53444-appbuilderbadge-stage.adobeioruntime.net/api/v1/web/deploy/app?repository=adobe/appbuilder-quickstarts&qs=openai-prompt)
+
+App Builder meets OpenAI
 
 ## Setup
 
