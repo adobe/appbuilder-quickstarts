@@ -14,11 +14,11 @@ async function main (params) {
     apiKey: params.OPENAI_API_KEY,
   });
   
-  const openai = new OpenAIApi(configuration);
-
   if (!configuration.apiKey) {
     return errorResponse( 500, 'OpenAI API key not configured, please follow instructions in README.md', logger)
   }
+
+  const openai = new OpenAIApi(configuration);
 
   const genre = params.genre?.trim() || 'pop-rock'
 
