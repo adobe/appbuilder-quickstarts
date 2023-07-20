@@ -3,5 +3,5 @@ html,
 body {
   text-align: center;
   margin: 40px;
-  background-color: rgb(0, 96, 86);
+  background-color: hsl(178,100%,16%);
 }

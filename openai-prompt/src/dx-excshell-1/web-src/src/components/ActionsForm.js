@@ -8,6 +8,7 @@ import {
   Flex,
   Heading,
   ActionButton,
+  Button,
   StatusLight,
   ProgressCircle,
   Text,
@@ -43,13 +44,15 @@ const ActionsForm = (props) => {
       <Flex direction="column" gap="size-200" alignItems="center">
       <Heading width="size-3000" level={2}>Bandname Generator</Heading>
       <Text width="size-3000">Click the button below to use the OpenAI API and an LLM to do something that could be done in 5 lines of JavaScript</Text>
-      <ActionButton
-        type="submit"
+      <Button
+        variant="primary"
+        style="fill"
+        staticColor="white"
         width="size-3000"
         onPress={invokeAction.bind(this)}
         isDisabled={state.actionInvokeInProgress}
       ><Text>Generate Band Name</Text>
-      </ActionButton>
+      </Button>
 
       <ProgressCircle
         aria-label="loading"
