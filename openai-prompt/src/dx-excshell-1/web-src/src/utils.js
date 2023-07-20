@@ -40,14 +40,10 @@ async function actionWebInvoke (actionUrl, headers = {}, params = {}, options = 
   }
 
   const response = await fetch(actionUrl, fetchConfig)
-
   let content = await response.text()
-
-  if (!response.ok) {
-    throw new Error(`failed request to '${actionUrl}' with status: ${response.status} and message: ${content}`)
-  }
   try {
     content = JSON.parse(content)
+    content.statusCode = response.status
   } catch (e) {
     // response is not json
   }
