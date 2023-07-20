@@ -38,8 +38,6 @@ const ActionsForm = (props) => {
     actionResult: ''
   })
 
-  console.log('actions = ', actions)
-
   return (
     <View backgroundColor="seafoam-400">
       <Flex direction="column" gap="size-200" alignItems="center">
