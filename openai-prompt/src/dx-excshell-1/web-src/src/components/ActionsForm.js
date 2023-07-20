@@ -13,7 +13,6 @@ import {
   Text,
   View
 } from '@adobe/react-spectrum'
-import Function from '@spectrum-icons/workflow/Function'
 
 import allActions from '../config.json'
 import actionWebInvoke from '../utils'
@@ -39,6 +38,8 @@ const ActionsForm = (props) => {
     actionResult: ''
   })
 
+  console.log('actions = ', actions)
+
   return (
     <View backgroundColor="seafoam-400">
       <Flex direction="column" gap="size-200" alignItems="center">
@@ -61,7 +62,7 @@ const ActionsForm = (props) => {
 
       {state.actionResponseError && (
         <View padding={'size-100'} marginTop={'size-100'} marginBottom={'size-100'} borderRadius={'small '}>
-          <StatusLight variant="negative">Failure! See the complete error in your browser console.</StatusLight>
+          <StatusLight variant="negative">{state.actionResponseError}</StatusLight>
         </View>
       )}
       {!state.actionResponseError && state.actionResponse && (
@@ -95,18 +96,31 @@ const ActionsForm = (props) => {
       // invoke backend action
       // this makes the backend call api with 'generate a band name, we play really good music'
       const params = {"genre": "really good"}
-      const actionResponse = await actionWebInvoke('https://development-918-blushinggoose.dev.runtime.adobe.io/api/v1/web/dx-excshell-1/get-bandname', null, params)
-      formattedResult =  actionResponse.result
-      // store the response
-      setState({
-        ...state,
-        actionResponse,
-        actionResult: formattedResult,
-        actionResponseError: null,
-        actionInvokeInProgress: false
-      })
+      const actionUrl = actions['dx-excshell-1/get-bandname']
+      const actionResponse = await actionWebInvoke(actionUrl, null, params)
+      console.log('action response', actionResponse)
+      if (actionResponse.statusCode !== 200) {
+        setState({
+          ...state,
+          actionResponse: null,
+          actionResult: actionResponse.result,
+          actionResponseError: actionResponse.error.error.message,
+          actionInvokeInProgress: false
+        })
+        
+      } else {
+        // store the response
+        setState({
+          ...state,
+          actionResponse,
+          actionResult: actionResponse.result,
+          actionResponseError: null,
+          actionInvokeInProgress: false
+        })
+      }
     } catch (e) {
       // log and store any error message
+      console.log('invokation error', e)
       formattedResult = `time: ${Date.now() - startTime} ms\n` + e.message
       console.error(e)
       setState({
