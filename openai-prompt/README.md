@@ -1,6 +1,6 @@
-# jessedemo1
+# Bandname Generator
 
-Welcome to my Adobe I/O Application!
+A simple demo of using OpenAI API in an App Builder app.
 
 ## Setup
 
