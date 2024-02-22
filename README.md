@@ -15,14 +15,21 @@ This repo has an ever growing collection of simple apps that demonstrate how to 
 
 ### How to install
 
+In addition to git clone and/or forking this repo, you can generate an app from the @adobe/aio-cli
+
+_ex. to generate the qr-code quickstart_
+
+`aio app init --repo adobe/appbuilder-quickstarts/qr-code`
+
 ### Contributing
 
-Contributions are welcomed! Read the [Contributing Guide](CONTRIBUTING.md) for more information.
+Contributions are welcome! Read the [Contributing Guide](CONTRIBUTING.md) for more information.
 
 Each directory is a self-contained starter app that can be used to demonstrate features or methods.  These apps may be starting points only, or full app projects with tests, ci/cd setups, etc.
 
 Every quick-start should contain a README.md outlining what it does, how it works, why it matters, and how to use it.
 
+Please send a pull request if you have a great quickstart you would like to add.
 
 
 ### Licensing
