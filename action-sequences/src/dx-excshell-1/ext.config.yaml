@@ -1,0 +1,71 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+actions: actions
+web: web-src
+runtimeManifest:
+  packages:
+    dx-excshell-1:
+      license: Apache-2.0
+      actions:
+        hello:
+          function: actions/hello/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            salutation: 'Wonderful to make your acquaintance'
+            name: 'Walter'
+          annotations:
+            require-adobe-auth: true
+            final: true
+        hello-frank:
+          function: actions/hello/index.js
+          web: 'yes'
+          runtime: nodejs:16
+          inputs:
+            LOG_LEVEL: debug
+            name: Frank
+            salutation: 'Wonderful to make your acquaintance'
+          annotations:
+            require-adobe-auth: false
+            final: true
+        member_join:
+          function: actions/fellowship/member_join.js
+          runtime: nodejs:18
+          inputs:
+            name:
+              type: string
+              description: name of person
+              default: unknown
+            place:
+              type: string
+              description: location of person
+              default: unknown
+            job:
+              type: string
+              description: current occupation
+              default: 0
+          outputs:
+            member:
+              type: json
+              description: member record
+        member_process:
+          function: actions/fellowship/member_process.js
+          runtime: nodejs:18
+          inputs:
+            member: {}
+        member_equip:
+          function: actions/fellowship/member_equip.js
+          runtime: nodejs:18
+          inputs:
+            member: {}
+      sequences:
+        fellowship_membership:
+          actions: member_join, member_process, member_equip
+          web: 'yes'
+          outputs:
+            member:
+              type: json
+              description: member record
