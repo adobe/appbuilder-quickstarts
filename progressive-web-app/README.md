@@ -17,3 +17,17 @@ Note: This app adds a couple npm modules to support icons and pwas
 - "@parcel/transformer-webmanifest"
 
 Images are stored in src/dx-excshell-1/web-src/images/
+
+## Config
+
+### `.env`
+
+You can generate this file using the command `aio app use`.
+
+```bash
+# This file must **not** be committed to source control
+
+## please provide your Adobe I/O Runtime credentials
+# AIO_RUNTIME_AUTH=
+# AIO_RUNTIME_NAMESPACE=
+```

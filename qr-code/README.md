@@ -23,3 +23,16 @@ Open the url, it will have the form:
 
 `https://<AIO_RUNTIME_NAMESPACE>.adobeioruntime.net/api/v1/web/qr-code-demo/get-qr-code?url=<add-your-url-to-qr-here>`
 
+## Config
+
+### `.env`
+
+You can generate this file using the command `aio app use`.
+
+```bash
+# This file must **not** be committed to source control
+
+## please provide your Adobe I/O Runtime credentials
+# AIO_RUNTIME_AUTH=
+# AIO_RUNTIME_NAMESPACE=
+```
