@@ -7,6 +7,8 @@ Three APIs will be deployed:
 - POST {baseUrl}/v1/roster - Add player to basketball roster
 - DELETE {baseUrl}/v1/roster/{id} - Remove player from basketball roster
 
+Try it out: `aio app init --repo adobe/appbuilder-quickstarts/action-apis`
+
 ## Setup
 
 - Populate the `.env` file in the project root
