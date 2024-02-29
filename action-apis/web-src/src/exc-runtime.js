@@ -1,7 +1,3 @@
-/* 
-* <license header>
-*/
-
 /**
  *
  * Script to load the Adobe Experience Cloud Runtime.

@@ -1,9 +1,3 @@
-/* 
-* <license header>
-*/
-
-/* This file exposes some common utilities for your actions */
-
 /**
  *
  * Returns a log ready string of the action input parameters.

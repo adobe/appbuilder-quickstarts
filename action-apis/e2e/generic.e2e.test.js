@@ -1,7 +1,3 @@
-/* 
-* <license header>
-*/
-
 const { Config } = require('@adobe/aio-sdk').Core
 const fs = require('fs')
 const fetch = require('node-fetch')

@@ -1,7 +1,3 @@
-/* 
-* <license header>
-*/
-
 jest.mock('@adobe/aio-sdk', () => ({
   Core: {
     Logger: jest.fn()

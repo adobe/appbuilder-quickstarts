@@ -1,7 +1,3 @@
-/* 
-* <license header>
-*/
-
 const utils = require('./../actions/utils.js')
 
 test('interface', () => {

@@ -1,7 +1,3 @@
-/* 
-* <license header>
-*/
-
 import React from 'react'
 import { Provider, defaultTheme, Grid, View } from '@adobe/react-spectrum'
 import ErrorBoundary from 'react-error-boundary'
