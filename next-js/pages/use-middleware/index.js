@@ -1,5 +1,3 @@
-import Link from 'next/link'
-import Image from "next/legacy/image"
 
 export default function Page() {
     return (

@@ -1,4 +1,4 @@
-export default function Index({ date }) {
+export default function Page({ date }) {
     return (
         <>
             <h1 className="text-4xl text-center mt-10">Server Side Props</h1>

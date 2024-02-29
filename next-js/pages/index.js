@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Image from "next/legacy/image"
+import Image from "next/image"
 
 export default function Page() {
   return (
@@ -9,10 +9,10 @@ export default function Page() {
 
       <div className="flex flex-wrap justify-center">
 
-        <Link className="no-underline text-black visited:text-black" href={'/use-middleware'}>
+        <Link className="no-underline text-black visited:text-black" href={`${process.env.PATH_PREFIX}/use-middleware`}>
           <div className="cursor-pointer">
             <div className="m-8 max-w-xs rounded overflow-hidden shadow-lg">
-              <Image src={`/routing-middleware.png`} alt={'Next.js middleware'} width={2560} height={1340} layout={"responsive"} />
+              <Image unoptimized={true} src={'/routing-middleware.png'} alt={'Next.js middleware'} width={2560} height={1340} layout={"responsive"} />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">Middleware</div>
                 <p className="text-gray-700 text-base">
@@ -23,10 +23,10 @@ export default function Page() {
           </div>
         </Link>
 
-        <Link className="no-underline text-black visited:text-black" href={"/server-side-props"}>
+        <Link className="no-underline text-black visited:text-black" href={`${process.env.PATH_PREFIX}/server-side-props`}>
           <div className="cursor-pointer">
             <div className="m-8 max-w-xs rounded overflow-hidden shadow-lg">
-              <Image src={`/server-side-props.png`} alt={'Next.js server-side-props'} width={2560} height={1340} layout={"responsive"} />
+              <Image unoptimized={true} src={'/server-side-props.png'} alt={'Next.js server-side-props'} width={2560} height={1340} layout={"responsive"} />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">Server-Side Props</div>
                 <p className="text-gray-700 text-base">
@@ -37,10 +37,10 @@ export default function Page() {
           </div>
         </Link>
 
-        <Link className="no-underline text-black visited:text-black" href={"/static-props"}>
+        <Link className="no-underline text-black visited:text-black" href={`${process.env.PATH_PREFIX}/static-props`}>
           <div className="cursor-pointer">
             <div className="m-8 max-w-xs rounded overflow-hidden shadow-lg">
-              <Image src={`/static-props.jpeg`} alt={'Next.js static props'} width={2560} height={1340} layout={"responsive"} />
+              <Image unoptimized={true} src={'/static-props.jpeg'} alt={'Next.js static props'} width={2560} height={1340} layout={"responsive"} />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">Static Props</div>
                 <p className="text-gray-700 text-base">
@@ -51,10 +51,10 @@ export default function Page() {
           </div>
         </Link>
 
-        <Link className="no-underline text-black visited:text-black" href={"/cars"}>
+        <Link className="no-underline text-black visited:text-black" href={`${process.env.PATH_PREFIX}/cars`}>
           <div className="cursor-pointer">
             <div className="m-8 max-w-xs rounded overflow-hidden shadow-lg">
-              <Image src={`/api-routes.png`} alt={'Next.js api'} width={2560} height={1340} layout={"responsive"} />
+              <Image unoptimized={true} src={'/api-routes.png'} alt={'Next.js api'} width={2560} height={1340} layout={"responsive"} />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">API</div>
                 <p className="text-gray-700 text-base">

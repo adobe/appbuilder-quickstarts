@@ -14,7 +14,7 @@ export default function Page() {
                 className="block w-1/2 mx-auto mt-5 p-3 rounded-md"
                 value={colors[0].name}
                 onChange={(e) => {
-                    router.push(`/static-props/${e.target.value}`)
+                    router.push(`${process.env.PATH_PREFIX}/static-props/${e.target.value}`)
                 }}
             >
                 {colors.map(({ name }) => (
@@ -23,16 +23,6 @@ export default function Page() {
                     </option>
                 ))}
             </select>
-
-            {/* <ul className="flex flex-wrap justify-center mt-10">
-                {colors.map(({ name }) => (
-                    <li className="m-2">
-                        <Link href={`/static-props/${name}`}>
-                            <a className="text-black">{name}</a>
-                        </Link>
-                    </li>
-                ))}
-            </ul> */}
         </>
     )
 }
