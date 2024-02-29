@@ -10,7 +10,7 @@ application:
             function: runtime/index.js
             # see https://github.com/adobe/openwhisk-action-utils/issues/214
             web: 'raw'
-            runtime: 'nodejs:14'
+            runtime: 'nodejs:18'
             inputs:
               LOG_LEVEL: debug
             annotations:
