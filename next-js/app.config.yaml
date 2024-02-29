@@ -1,0 +1,17 @@
+application:
+  actions: actions
+  web: pages
+  runtimeManifest:
+    packages:
+      actions:
+        license: Apache-2.0
+        actions:
+          pages:
+            function: runtime/index.js
+            # see https://github.com/adobe/openwhisk-action-utils/issues/214
+            web: 'raw'
+            runtime: 'nodejs:14'
+            inputs:
+              LOG_LEVEL: debug
+            annotations:
+              final: true

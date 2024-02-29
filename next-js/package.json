@@ -1,0 +1,33 @@
+{
+  "scripts": {
+    "lint": "next lint",
+    "dev": "next dev",
+    "build": "cross-env NODE_ENV=production next build",
+    "rt:clean": "rm -rf dist/application && mkdir -p dist/application/actions/pages-temp && mkdir -p dist/application/web-prod/_next",
+    "rt:dependencies": "rm -rf runtime/node_modules && node scripts/copy-dependencies && cd runtime && npm i",
+    "rt:prepare": "cp -r .next/standalone/* dist/application/actions/pages-temp/ && cp -r .next/standalone/.next dist/application/actions/pages-temp/.next && cp runtime/index.js dist/application/actions/pages-temp/ && node scripts/copy-env && cp -r public/ dist/application/web-prod/ && cp -r .next/static dist/application/web-prod/_next/static && rm dist/application/actions/pages-temp/server.js",
+    "rt:zip": "node scripts/zip",
+    "rt:build": "npm run rt:clean && npm run rt:dependencies && npm run rt:prepare && npm run rt:zip",
+    "rt:deploy": "aio app deploy --no-actions --no-build && aio app deploy --no-web-assets --no-build",
+    "deploy": "npm run build && npm run rt:build && npm run rt:deploy"
+  },
+  "dependencies": {
+    "@adobe/aem-headless-client-js": "^3.1.1",
+    "cookie": "^0.4.2",
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.0.2",
+    "styled-jsx": "^5.0.1",
+    "swr": "^1.2.2"
+  },
+  "devDependencies": {
+    "@adobe/aio-lib-runtime": "^6.0.0",
+    "autoprefixer": "^10.4.4",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
+    "eslint": "8.12.0",
+    "eslint-config-next": "12.1.1",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.23"
+  }
+}

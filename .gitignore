@@ -37,3 +37,6 @@ coverage
 # logs folder for aio-run-detached
 logs
 
+# Next
+.next
+.vercel
