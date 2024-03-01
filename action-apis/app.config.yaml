@@ -1,0 +1,52 @@
+application:
+  actions: actions
+  web: web-src
+  runtimeManifest:
+    packages:
+      basketball-team:
+        license: Apache-2.0
+        actions:
+          getRoster:
+            function: actions/basketball-team/getRoster.js
+            web: 'yes'
+            runtime: nodejs:18
+            inputs:
+              LOG_LEVEL: debug
+            annotations:
+              final: true
+          addPlayer:
+            function: actions/basketball-team/addPlayer.js
+            web: 'yes'
+            runtime: nodejs:18
+            inputs:
+              LOG_LEVEL: debug
+            annotations:
+              final: true
+          removePlayer:
+            function: actions/basketball-team/removePlayer.js
+            web: 'yes'
+            runtime: nodejs:18
+            inputs:
+              LOG_LEVEL: debug
+            annotations:
+              final: true
+        apis:
+          getRoster: # API name
+            v1: # API path /v1/roster
+              roster: 
+                getRoster: # Runtime action
+                  method: GET
+                  response: http
+          addPlayer: # API name
+            v1: # API path /v1/roster
+              roster: 
+                addPlayer: # Runtime action
+                  method: POST
+                  response: http
+          removePlayer: # API name
+            v1: # API path /v1/roster/{id}
+              roster/{id}: 
+                removePlayer: # Runtime action
+                  method: DELETE
+                  response: http
+
