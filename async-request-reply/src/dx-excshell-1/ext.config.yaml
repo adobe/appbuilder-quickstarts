@@ -1,0 +1,31 @@
+operations:
+  view:
+    - type: web
+      impl: index.html
+actions: actions
+web: web-src
+runtimeManifest:
+  packages:
+    dx-excshell-1:
+      license: Apache-2.0
+      actions:
+        long-running:
+          function: actions/long-running/index.js
+          web: 'no'
+          runtime: nodejs:18
+          inputs:
+            LOG_LEVEL: debug
+          limits:
+            timeout: 600000
+          annotations:
+            require-adobe-auth: false
+            final: false
+        polling:
+          function: actions/polling/index.js
+          web: 'yes'
+          runtime: nodejs:18
+          inputs:
+            LOG_LEVEL: debug
+          annotations:
+            require-adobe-auth: false
+            final: false
