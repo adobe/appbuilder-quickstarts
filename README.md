@@ -13,6 +13,7 @@ This repo has an ever growing collection of simple apps that demonstrate how to 
 |qr-code|generate qr code images from input urls|
 |qs-appbar-menus|add menu items to the experience.adobe.com top bar|
 |action-apis|put an api in front of a runtime action|
+|async-request-reply|proxy web-action calls to a long running action|
 
 ### How to install
 
