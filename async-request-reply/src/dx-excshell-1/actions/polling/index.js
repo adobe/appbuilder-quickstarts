@@ -7,6 +7,9 @@
  * It will return the result of the long running action when it is complete 200 OK
  */
 
+// note: openwhisk is a global module that is available in the all runtime actions, it does not need to
+// be added to the package.json dependencies
+
 let openwhisk = require("openwhisk");
 async function main(params) {
 
