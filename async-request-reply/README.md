@@ -14,3 +14,4 @@ You can install and run this app yourself!
     aio app run
 
 
+<img width="574" alt="Screenshot 2024-05-02 at 8 55 47 PM" src="https://github.com/adobe/appbuilder-quickstarts/assets/46134/30c6ece8-94cf-49c7-ace3-42722e860c10">
