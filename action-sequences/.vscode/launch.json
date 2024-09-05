@@ -2,24 +2,26 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "App Builder: debug actions",
+      "name": "App Builder: debug server-side",
       "type": "node-terminal",
       "request": "launch",
-      "command": "aio app dev"
-    }, {
+      "command": "npm run dev"
+    },
+    {
+      "name": "App Builder: debug client-side",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:9080"
+    },
+    {
       "name": "App Builder: debug full stack",
       "type": "node-terminal",
       "request": "launch",
-      "command": "aio app dev",
-      "skipFiles": ["<node_internals>/**"],
-      "sourceMapPathOverrides": {
-        "/__parcel_source_root/*": "${webRoot}/*"
-      },
+      "command": "npm run dev",
       "serverReadyAction": {
-        "pattern": "server running on port : ([0-9]+)",
-        "uriFormat": "https://localhost:%s",
-        "action": "debugWithChrome",
-        "webRoot": "${workspaceFolder}"
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
       }
     }
   ]
