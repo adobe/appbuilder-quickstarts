@@ -28,11 +28,9 @@ import {
   Content,
   ButtonGroup,
   repeat,
-  ProgressBar,
+  ProgressBar
 } from '@adobe/react-spectrum'
 import { ToastContainer, ToastQueue } from '@react-spectrum/toast'
-import Moon from '@spectrum-icons/workflow/Moon'
-import Light from '@spectrum-icons/workflow/Light'
 import Globe from '@spectrum-icons/workflow/Globe'
 import { Plus } from 'lucide-react'
 import actionWebInvoke from '../utils'
@@ -48,26 +46,25 @@ import config from '../config.json'
 //   { bg: 'purple-400', border: 'static-purple-600' },
 // ]
 
-const lightColors = [
-  '#D4D4D4', // Light Grey
-  '#DEA584', // Peach
-  '#F8C471', // Light Orange
-  '#EBDEF0', // Light Purple
-  '#A2D9CE', // Light Teal
-  '#AED6F1', // Light Blue
-  // '#FAD7A0', // Light Yellow
-  // '#D7BDE2'  // Lavender
-]
-const darkColors = [
-  '#2D3748', // Dark Blue-Grey
-  '#B2675E', // Dark Peach
-  '#B77C2E', // Dark Orange
-  '#7C5295', // Dark Purple
-  '#3F6D63', // Dark Teal
-  '#3E6B8A', // Dark Blue
-  // '#A6814C', // Dark Yellow
-  // '#7C5295'  // Dark Lavender
-]
+const tileColorsMap = {
+  // colorScheme
+  light: [
+    '#D4D4D4', // Light Grey
+    '#DEA584', // Peach
+    '#F8C471', // Light Orange
+    '#EBDEF0', // Light Purple
+    '#A2D9CE', // Light Teal
+    '#AED6F1' // Light Blue
+  ],
+  dark: [
+    '#2D3748', // Dark Blue-Grey
+    '#B2675E', // Dark Peach
+    '#B77C2E', // Dark Orange
+    '#7C5295', // Dark Purple
+    '#3F6D63', // Dark Teal
+    '#3E6B8A' // Dark Blue
+  ]
+}
 
 const getTileRatio = (index) => {
   const isWide = (index + 1) % 5 === 0
@@ -80,7 +77,7 @@ const UpdateMemoDialog = React.memo(function UpdateMemoDialog({
   setMemos,
   region,
   close,
-  ims,
+  ims
 }) {
   const [error, setError] = useState('')
   let dialogText = memo?.content || ''
@@ -95,7 +92,7 @@ const UpdateMemoDialog = React.memo(function UpdateMemoDialog({
       const updatedMemo = {
         id: Date.now(), // memo.id,
         ...memo,
-        content: dialogText,
+        content: dialogText
       }
 
       setMemos((prevMemos) => {
@@ -104,13 +101,13 @@ const UpdateMemoDialog = React.memo(function UpdateMemoDialog({
           config['memo-backend/update'],
           {
             authorization: `Bearer ${ims.token}`,
-            'x-gw-ims-org-id': ims.org,
+            'x-gw-ims-org-id': ims.org
           },
           {
             id: updatedMemo.id,
             content: updatedMemo.content,
-            region,
-          },
+            region
+          }
         )
           .then((res) => {
             console.log(`update memo ${updatedMemo.id} response: ${res}`)
@@ -122,7 +119,7 @@ const UpdateMemoDialog = React.memo(function UpdateMemoDialog({
         const index = prevMemos.findIndex((memo) => memo.id === updatedMemo.id)
         if (index !== -1) {
           return prevMemos.map((memo) =>
-            memo.id === updatedMemo.id ? updatedMemo : memo,
+            memo.id === updatedMemo.id ? updatedMemo : memo
           )
         } else {
           // new addition
@@ -131,7 +128,7 @@ const UpdateMemoDialog = React.memo(function UpdateMemoDialog({
       })
       setError('')
     },
-    [memo],
+    [memo]
   )
 
   const handleDelete = () => {
@@ -139,13 +136,13 @@ const UpdateMemoDialog = React.memo(function UpdateMemoDialog({
     actionWebInvoke(
       config['memo-backend/delete'],
       { authorization: `Bearer ${ims.token}`, 'x-gw-ims-org-id': ims.org },
-      { id: memo.id, region },
+      { id: memo.id, region }
     )
       .then((res) => {
         console.log(`delete memo ${memo.id} response: ${JSON.stringify(res)}`)
         if (res.keys === 0) {
           ToastQueue.negative(
-            `Failed to delete memo, key not found: ${memo.id}`,
+            `Failed to delete memo, key not found: ${memo.id}`
           )
         }
       })
@@ -204,7 +201,7 @@ const ClickableTile = React.memo(function MemoTile({
   ratio,
   backgroundColor,
   borderColor,
-  children,
+  children
 }) {
   const { cols, rows } = ratio
 
@@ -225,7 +222,7 @@ const ClickableTile = React.memo(function MemoTile({
           backgroundColor,
           borderColor,
           boxShadow:
-            '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+            '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)'
         }}
         // borderWidth="thick"
       >
@@ -267,18 +264,44 @@ const MemoTileContent = React.memo(function MemoTileContent({ ratio, memo }) {
   )
 })
 
-function MemoApp({ ims }) {
+function MemoApp({ ims, runtime }) {
   const [memos, setMemos] = useState([])
   const [loadingTime, setLoadingTime] = useState(0)
   const [region, setRegion] = useState('amer')
   const [colorScheme, setColorScheme] = useState('light')
+
+  const getTileColor = (index) => {
+    return tileColorsMap[colorScheme][index % tileColorsMap[colorScheme].length]
+  }
+
+  const setThemeWrapper = (theme) => {
+    if (theme.startsWith('spectrum--')) {
+      theme = theme.split('spectrum--')[1]
+    }
+    if (theme !== 'lightest' && theme !== 'darkest') {
+      console.warn(`received unknown theme '${theme}', defaulting to lightest`)
+      theme = 'lightest'
+    }
+    setColorScheme(theme === 'darkest' ? 'dark' : 'light')
+  }
+
+  // theme on start
+  useEffect(() => {
+    runtime.user.get('theme').then((theme) => {
+      setThemeWrapper(theme)
+    })
+  })
+  // theme on exc-shell user update
+  runtime.user.on('change:theme', (theme) => {
+    setThemeWrapper(theme)
+  })
 
   const handleWipeOut = () => {
     // in background
     actionWebInvoke(
       config['memo-backend/delete'],
       { authorization: `Bearer ${ims.token}`, 'x-gw-ims-org-id': ims.org },
-      { all: true, region },
+      { all: true, region }
     )
       .then((res) => {
         console.log(`wipeout memos response: ${JSON.stringify(res)}`)
@@ -297,7 +320,7 @@ function MemoApp({ ims }) {
     actionWebInvoke(
       config['memo-backend/getAll'],
       { authorization: `Bearer ${ims.token}`, 'x-gw-ims-org-id': ims.org },
-      { region },
+      { region }
     )
       .then((memos) => {
         setMemos(memos)
@@ -316,10 +339,6 @@ function MemoApp({ ims }) {
   useEffect(() => {
     handleRefresh()
   }, [region])
-
-  const toggleColorScheme = () => {
-    setColorScheme((prevScheme) => (prevScheme === 'light' ? 'dark' : 'light'))
-  }
 
   const togleRegion = () => {
     setRegion((prevRegion) => {
@@ -357,7 +376,7 @@ function MemoApp({ ims }) {
             quiet
             height="size-600"
             width="size-1200"
-            UNSAFE_style={{ marginLeft: '-30px'}}
+            UNSAFE_style={{ marginLeft: '-95px' }}
           >
             {region === 'amer' && <Text>US</Text>}
             {region === 'emea' && <Text>EU</Text>}
@@ -385,18 +404,6 @@ function MemoApp({ ims }) {
                 confirm?
               </AlertDialog>
             </DialogTrigger>
-            <ActionButton
-              onPress={toggleColorScheme}
-              quiet
-              height="size-600"
-              width="size-600"
-            >
-              {colorScheme === 'light' ? (
-                <Moon width="size-400" height="size-400" />
-              ) : (
-                <Light width="size-400" height="size-400" />
-              )}
-            </ActionButton>
           </Flex>
         </Flex>
 
@@ -407,7 +414,7 @@ function MemoApp({ ims }) {
               // todo make getTileRatio responsive
               S: [repeat(2, '1fr')],
               M: [repeat(4, '1fr')],
-              L: [repeat(6, '1fr')],
+              L: [repeat(6, '1fr')]
             }}
             gap="size-200"
             marginBottom="size-200"
@@ -416,12 +423,7 @@ function MemoApp({ ims }) {
               <DialogTrigger key={memo.id}>
                 <ClickableTile
                   ratio={getTileRatio(index)}
-                  backgroundColor={
-                    colorScheme === 'light'
-                      ? lightColors[index % lightColors.length]
-                      : darkColors[index % darkColors.length]
-                  }
-                  // borderColor={colorScheme === 'dark' ? lightColors[index % lightColors.length] : darkColors[index % darkColors.length]}
+                  backgroundColor={getTileColor(index)}
                 >
                   <MemoTileContent memo={memo} ratio={getTileRatio(index)} />
                 </ClickableTile>
@@ -440,7 +442,6 @@ function MemoApp({ ims }) {
               <ClickableTile
                 ratio={getTileRatio(sortedMemos.length)}
                 backgroundColor={colorScheme === 'dark' ? '#2D3748' : '#f5f5f5'}
-                // borderColor={colorScheme === 'dark' ? lightColors[sortedMemos.length % lightColors.length] : darkColors[sortedMemos.length % darkColors.length]}
               >
                 <Flex justifyContent="center" alignItems="center" height="100%">
                   <Plus

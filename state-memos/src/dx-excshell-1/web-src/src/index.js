@@ -9,7 +9,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 import ReactDOM from 'react-dom'
@@ -32,9 +31,23 @@ try {
   bootstrapRaw()
 }
 
-function bootstrapRaw () {
+function bootstrapRaw() {
   /* **here you can mock the exc runtime and ims objects** */
-  const mockRuntime = { on: () => {} }
+  const mockRuntime = {
+    user: {
+      get: async (field) => {
+        if (field === 'theme') {
+          // return 'lightest'
+          // return 'darkest'
+          return window?.matchMedia('(prefers-color-scheme: dark)').matches
+             ? 'darkest'
+             : 'lightest'
+        }
+        return null
+      },
+      on: () => {},
+    },
+  }
   const mockIms = {}
 
   // render the actual react application and pass along the runtime object to make it available to the App
@@ -44,7 +57,7 @@ function bootstrapRaw () {
   )
 }
 
-function bootstrapInExcShell () {
+function bootstrapInExcShell() {
   // get the Experience Cloud Runtime object
   const runtime = Runtime()
 
@@ -62,7 +75,7 @@ function bootstrapInExcShell () {
     const ims = {
       profile: imsProfile,
       org: imsOrg,
-      token: imsToken
+      token: imsToken,
     }
     // render the actual react application and pass along the runtime and ims objects to make it available to the App
     ReactDOM.render(
@@ -75,7 +88,7 @@ function bootstrapInExcShell () {
   runtime.solution = {
     icon: 'AdobeExperienceCloud',
     title: 'statememo',
-    shortTitle: 'JGR'
+    shortTitle: 'JGR',
   }
   runtime.title = 'statememo'
 }
