@@ -1,34 +1,83 @@
-# test-debugger
+# TypeScript App Builder Quickstart
 
-Welcome to my Adobe I/O Application!
+This example demonstrates how to use TypeScript in an Adobe App Builder application, for both **Runtime actions** and **UI components**.
+
+## TypeScript support for Runtime actions
+
+This project includes a TypeScript action at `actions/tsAction/index.ts`. The setup requires three pieces:
+
+### 1. Webpack configuration
+
+A `webpack-config.js` in the project root configures `ts-loader` to compile TypeScript during the build:
+
+```javascript
+module.exports = {
+  devtool: 'inline-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.ts?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader'
+      }
+    ]
+  }
+}
+```
+
+> If your project uses ES modules (`"type": "module"` in `package.json`), name this file `webpack-config.cjs` instead.
+
+### 2. TypeScript configuration
+
+A `tsconfig.json` in the project root:
+
+```json
+{
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ES6",
+    "sourceMap": true
+  }
+}
+```
+
+### 3. Action entry point in `app.config.yaml`
+
+Point the `function` field directly to the `.ts` file:
+
+```yaml
+tsAction:
+  function: actions/tsAction/index.ts
+  web: 'yes'
+  runtime: nodejs:22
+```
+
+No manual `tsc` compilation or duplicated source directories are needed. App Builder handles the compilation via Webpack automatically.
+
+### Prerequisites
+
+Install `ts-loader` and `typescript` as dev dependencies:
+
+```bash
+npm install --save-dev ts-loader typescript
+```
+
+## TypeScript support for UI
+
+To use TypeScript in React components, use the `.tsx` extension and add the following to your `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react"
+  }
+}
+```
 
 ## Setup
 
-- Populate the `.env` file in the project root and fill it as shown [below](#env)
-
-## Local Dev
-
-- `aio app run` to start your local Dev server
-- App will run on `localhost:9080` by default
-
-By default the UI will be served locally but actions will be deployed and served from Adobe I/O Runtime. To start a
-local serverless stack and also run your actions locally use the `aio app run --local` option.
-
-## Test & Coverage
-
-- Run `aio app test` to run unit tests for ui and actions
-- Run `aio app test --e2e` to run e2e tests
-
-## Deploy & Cleanup
-
-- `aio app deploy` to build and deploy all actions on Runtime and static files to CDN
-- `aio app undeploy` to undeploy the app
-
-## Config
-
-### `.env`
-
-You can generate this file using the command `aio app use`. 
+- Populate the `.env` file in the project root (generate it with `aio app use`)
 
 ```bash
 # This file must **not** be committed to source control
@@ -38,44 +87,29 @@ You can generate this file using the command `aio app use`.
 # AIO_RUNTIME_NAMESPACE=
 ```
 
-### `app.config.yaml`
+## Local Dev
 
-- Main configuration file that defines an application's implementation. 
-- More information on this file, application configuration, and extension configuration 
-  can be found [here](https://developer.adobe.com/app-builder/docs/guides/appbuilder-configuration/#appconfigyaml)
+- `aio app dev` to start your local dev server
+- App will run on `localhost:9080` by default
 
-#### Action Dependencies
+## Test & Coverage
 
-- You have two options to resolve your actions' dependencies:
+- Run `aio app test` to run unit tests for UI and actions
+- Run `aio app test --e2e` to run e2e tests
 
-  1. **Packaged action file**: Add your action's dependencies to the root
-   `package.json` and install them using `npm install`. Then set the `function`
-   field in `app.config.yaml` to point to the **entry file** of your action
-   folder. We will use `webpack` to package your code and dependencies into a
-   single minified js file. The action will then be deployed as a single file.
-   Use this method if you want to reduce the size of your actions.
+## Deploy & Cleanup
 
-  2. **Zipped action folder**: In the folder containing the action code add a
-     `package.json` with the action's dependencies. Then set the `function`
-     field in `app.config.yaml` to point to the **folder** of that action. We will
-     install the required dependencies within that directory and zip the folder
-     before deploying it as a zipped action. Use this method if you want to keep
-     your action's dependencies separated.
+- `aio app deploy` to build and deploy all actions on Runtime and static files to CDN
+- `aio app undeploy` to undeploy the app
 
 ## Debugging in VS Code
 
-While running your local server (`aio app run`), both UI and actions can be debugged, to do so open the vscode debugger
-and select the debugging configuration called `WebAndActions`.
-Alternatively, there are also debug configs for only UI and each separate action.
+While running your local server (`aio app dev`), both UI and actions can be debugged. Open the VS Code debugger and select the debugging configuration called `App Builder: debug actions` or `App Builder: debug full stack`.
 
-## Typescript support for UI
+Adding `devtool: 'inline-source-map'` to `webpack-config.js` (already included in this example) enables source map support for stepping through TypeScript code in the debugger.
 
-To use typescript use `.tsx` extension for react components and add a `tsconfig.json` 
-and make sure you have the below config added
-```
- {
-  "compilerOptions": {
-      "jsx": "react"
-    }
-  } 
-```
+## More information
+
+- [TypeScript Actions documentation](https://developer.adobe.com/app-builder/docs/guides/configuration/typescript-actions/)
+- [Webpack Configuration documentation](https://developer.adobe.com/app-builder/docs/guides/configuration/webpack-configuration/)
+- [App Builder Configuration Files](https://developer.adobe.com/app-builder/docs/guides/configuration/)
