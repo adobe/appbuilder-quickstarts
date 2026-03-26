@@ -1,17 +1,13 @@
-type Something = {
-  name: string;
-  age: number;
-};
+interface ActionParams {
+  LOG_LEVEL?: string;
+  [key: string]: unknown;
+}
 
-export async function main (params: any, thing: Something) {
-  // alrighty then
+export async function main (params: ActionParams) {
   const result = {
     statusCode: 200,
-    body: 'this is a Typescript action',
-    params,
-    thing
+    body: 'this is a TypeScript action'
   }
-  const x = { ...result, foo: 'bar '}
 
   return result
 }
